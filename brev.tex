@@ -1,0 +1,70 @@
+% Based on John MacFarlane's letter template (https://gist.github.com/jgm/8388212)
+
+\documentclass{letter}
+\usepackage{polyglossia}
+\setdefaultlanguage{swedish}
+\usepackage{csquotes}
+\usepackage{microtype}
+
+$if(typsnitt)$
+\setmainfont{$typsnitt$}
+$else$
+\setmainfont{Hoefler Text}
+$endif$
+
+\usepackage{lipsum}
+
+\usepackage{hyperref}
+\hypersetup{breaklinks=true,
+            pdfauthor={$author-meta$},
+            pdftitle={$title-meta$},
+            colorlinks=true,
+            urlcolor=$if(urlcolor)$$urlcolor$$else$blue$endif$,
+            linkcolor=$if(linkcolor)$$linkcolor$$else$magenta$endif$,
+            pdfborder={0 0 0}}
+\urlstyle{same}  % don't use monospace font for urls
+
+% Make links footnotes instead of hotlinks:
+\renewcommand{\href}[2]{#2\footnote{\url{#1}}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+
+$if(signatur)$
+\signature{$signatur$}
+$endif$
+
+$if(numbersections)$
+\setcounter{secnumdepth}{5}
+$else$
+\setcounter{secnumdepth}{0}
+$endif$
+
+$for(header-includes)$
+$header-includes$
+$endfor$
+
+$if(datum)$
+\def\today{$datum$}
+$endif$
+
+$if(adress)$
+\address{$adress$}
+$endif$
+
+\begin{document}
+
+\begin{letter}{$till$}
+\opening{$inledning$}
+
+$body$
+
+\closing{$if(avslutning)$$avslutning$$else$Vänligen,$endif$}
+
+$if(cc)$
+\cc{$cc$}
+$endif$
+\end{letter}
+
+\end{document}
